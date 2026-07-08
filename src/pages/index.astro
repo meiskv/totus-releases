@@ -30,9 +30,11 @@ import EyebrowBoard from "../components/EyebrowBoard.tsx";
     <div class="hero-grid">
       <h1 class="hero-title display">Your week is triaged.</h1>
       <p class="hero-sub">
-        Totus is a self-hosted command center for coding agents. It catches Slack
-        pings and Linear tickets, plans the work, and ships it with Claude Code or
-        OpenCode — with you in the loop.
+        Totus is a self-hosted command center for coding agents. It catches
+        <span class="brand"><img class="brand-ico" src="/slack.svg" alt="" width="16" height="16" loading="lazy" />Slack</span> pings and <span class="brand"><img class="brand-ico" src="/linear.svg" alt="" width="16" height="16" loading="lazy" />Linear</span> tickets,
+        plans the work, and ships it with <span class="brand"><img class="brand-ico" src="/claude.svg" alt="" width="16" height="16" loading="lazy" />Claude&nbsp;Code</span>,
+        <span class="brand"><img class="brand-ico" src="/opencode-logo-dark.svg" alt="" width="16" height="16" loading="lazy" />OpenCode</span>, or <span class="brand"><img class="brand-ico" src="/codex.svg" alt="" width="16" height="16" loading="lazy" />Codex<span class="brand-wip">WIP</span></span>
+        — with you in the loop.
       </p>
     </div>
 
@@ -393,6 +395,35 @@ import EyebrowBoard from "../components/EyebrowBoard.tsx";
     margin: 0 0 0.4rem;
     opacity: 0;
     animation: fade-in 1s ease-out 0.2s forwards;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .brand-ico {
+    width: 1em;
+    height: 1em;
+    border-radius: 3px;
+    vertical-align: -0.15em;
+    flex-shrink: 0;
+  }
+
+  .brand-wip {
+    margin-left: 0.35em;
+    font-size: 0.62em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05em 0.32em;
   }
 
   .cta-row {
