@@ -1,0 +1,73 @@
+---
+// Small memory-chip cluster for the "shared memory" strip.
+const chips = [
+  "prefers bun over npm",
+  "dark mode always",
+  "conventional commits",
+  "run tests before PR",
+  "concise summaries",
+];
+---
+
+<div class="mem" role="img" aria-label="Remembered preferences carried across projects">
+  {chips.map((c, i) => (
+    <span class="mem-chip" style={`--i:${i}`}>
+      <span class="mem-dot" aria-hidden="true"></span>
+      {c}
+    </span>
+  ))}
+</div>
+
+<style>
+  .mem {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: flex-start;
+  }
+
+  .mem-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.65rem;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    color: var(--fg-muted);
+    white-space: nowrap;
+    opacity: 0;
+    animation: mem-in 0.5s ease-out forwards;
+    animation-delay: calc(var(--i) * 0.12s);
+  }
+
+  .mem-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-soft);
+    flex-shrink: 0;
+  }
+
+  @keyframes mem-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mem-chip {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>

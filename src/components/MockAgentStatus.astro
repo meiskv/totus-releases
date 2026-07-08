@@ -1,0 +1,113 @@
+---
+const agents = [
+  { name: "code-reviewer", status: "running" },
+  { name: "type-design-analyzer", status: "running" },
+  { name: "silent-failure-hunter", status: "done" },
+  { name: "pr-test-analyzer", status: "done" },
+];
+---
+
+<div class="agents">
+  <header class="agents-head">
+    <span class="agents-title">child agents</span>
+    <span class="agents-count">2 running · 2 done</span>
+  </header>
+  <ul class="agents-list">
+    {
+      agents.map((a) => (
+        <li class={`agent agent--${a.status}`}>
+          <span class="agent-dot" aria-hidden="true" />
+          <span class="agent-name">{a.name}</span>
+          <span class="agent-status">{a.status}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .agents {
+    width: 100%;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 0.8rem;
+    font-family: var(--mono);
+  }
+
+  .agents-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+
+  .agents-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  .agents-count {
+    font-size: 0.65rem;
+    color: var(--accent);
+  }
+
+  .agents-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .agent {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    padding: 0.25rem 0;
+  }
+
+  .agent-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--fg-dim);
+  }
+
+  .agent--running .agent-dot {
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-soft);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  .agent--done .agent-dot {
+    background: #a78bfa;
+  }
+
+  .agent-name {
+    color: var(--fg);
+  }
+
+  .agent-status {
+    color: var(--fg-dim);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .agent--running .agent-status {
+    color: var(--accent);
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+</style>
