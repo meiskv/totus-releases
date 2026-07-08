@@ -3,7 +3,37 @@
 // than the inline .astro client-script transform (see lib/home.ts for why).
 import { fetchLatestRelease, RELEASES_URL } from "./releases";
 
+function initCopyButtons() {
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".fl-copy");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const targetId = btn.dataset.copyTarget;
+      const el = targetId ? document.getElementById(targetId) : null;
+      const text = el?.textContent ?? "";
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const range = document.createRange();
+        if (el) range.selectNodeContents(el);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+      }
+      const original = btn.textContent;
+      btn.textContent = "Copied";
+      btn.classList.add("copied");
+      window.setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove("copied");
+      }, 1600);
+    });
+  });
+}
+
 export async function initDownloadPage() {
+  initCopyButtons();
+
   const versionLabel = document.getElementById("version-label");
   const cards = document.querySelectorAll<HTMLAnchorElement>(".download-card");
 
