@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.DS_Store
+# NOTE: public/app-demo/ is intentionally committed (prebuilt no-backend demo,
+# synced from the totus monorepo via scripts/sync-marketing-demo.sh there).

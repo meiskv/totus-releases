@@ -1,0 +1,220 @@
+---
+interface Props {
+  title: string;
+  source: "slack" | "linear";
+  meta?: string;
+  priority?: "P0" | "P1" | "P2";
+  status?: "needs-you" | "triaging" | "shipped";
+  author?: string;
+  time?: string;
+}
+const { title, source, meta, priority, status, author, time } = Astro.props;
+
+const statusLabel: Record<string, string> = {
+  "needs-you": "Needs you",
+  triaging: "Triaging",
+  shipped: "Shipped",
+};
+---
+
+<div class="tcard">
+  <div class="tcard-left">
+    {priority && <span class={`tcard-priority tcard-priority--${priority.toLowerCase()}`}>{priority}</span>}
+    {!priority && <span class="tcard-priority-spacer" />}
+  </div>
+  <div class="tcard-body">
+    <div class="tcard-row-top">
+      <p class="tcard-title">{title}</p>
+      {time && <span class="tcard-time">{time}</span>}
+    </div>
+    <div class="tcard-row-bottom">
+      <span class={`tcard-source tcard-source--${source}`}>
+        {source === "slack" ? (
+          <img src="/slack.svg" alt="" class="tcard-source-icon" />
+        ) : (
+          <img src="/linear.svg" alt="" class="tcard-source-icon" />
+        )}
+        {meta}
+      </span>
+      {status && (
+        <span class={`tcard-status tcard-status--${status}`}>
+          {statusLabel[status]}
+        </span>
+      )}
+      {author && (
+        <span class="tcard-author">
+          <span class="tcard-avatar">{author.charAt(0).toUpperCase()}</span>
+          {author}
+        </span>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .tcard {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.65rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .tcard:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-hover);
+  }
+
+  .tcard-left {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .tcard-priority {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.12rem 0.35rem;
+    border-radius: 4px;
+    line-height: 1.3;
+  }
+
+  .tcard-priority--p0 {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.12);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+  }
+
+  .tcard-priority--p1 {
+    color: #f4c453;
+    background: rgba(244, 196, 83, 0.1);
+    border: 1px solid rgba(244, 196, 83, 0.18);
+  }
+
+  .tcard-priority--p2 {
+    color: #7dd3fc;
+    background: rgba(125, 211, 252, 0.08);
+    border: 1px solid rgba(125, 211, 252, 0.15);
+  }
+
+  .tcard-priority-spacer {
+    width: 1.8rem;
+  }
+
+  .tcard-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .tcard-row-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .tcard-title {
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--fg);
+  }
+
+  .tcard-time {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--fg-dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 0.1rem;
+  }
+
+  .tcard-row-bottom {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+  }
+
+  .tcard-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.02em;
+    color: var(--fg-dim);
+  }
+
+  .tcard-source-icon {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .tcard-source--slack {
+    color: #e8a838;
+  }
+
+  .tcard-source--linear {
+    color: #8b9bff;
+  }
+
+  .tcard-status {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+  }
+
+  .tcard-status--needs-you {
+    color: #f4c453;
+    background: rgba(244, 196, 83, 0.1);
+  }
+
+  .tcard-status--triaging {
+    color: #7dd3fc;
+    background: rgba(125, 211, 252, 0.08);
+  }
+
+  .tcard-status--shipped {
+    color: #5fd6a4;
+    background: rgba(95, 214, 164, 0.1);
+  }
+
+  .tcard-author {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--fg-dim);
+    margin-left: auto;
+  }
+
+  .tcard-avatar {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.45rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+  }
+</style>

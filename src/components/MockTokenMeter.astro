@@ -1,0 +1,227 @@
+---
+const percent = 43;
+const dash = 188;
+const offset = dash * (1 - percent / 100);
+---
+
+<div class="meter">
+  <div class="meter-head">
+    <span class="meter-title">tokens</span>
+    <span class="meter-live"><span class="meter-live-dot" />live</span>
+  </div>
+
+  <div class="meter-top">
+    <div class="meter-ring">
+      <svg viewBox="0 0 70 70" aria-hidden="true">
+        <circle cx="35" cy="35" r="30" stroke="var(--border)" stroke-width="5" fill="none" />
+        <circle
+          cx="35"
+          cy="35"
+          r="30"
+          stroke="var(--accent)"
+          stroke-width="5"
+          fill="none"
+          stroke-dasharray={dash}
+          stroke-dashoffset={offset}
+          stroke-linecap="round"
+          transform="rotate(-90 35 35)"
+        />
+      </svg>
+      <div class="meter-ring-center">
+        <span class="meter-pct">43%</span>
+        <span class="meter-used">used</span>
+      </div>
+    </div>
+
+    <div class="meter-context">
+      <span class="meter-ctx-label">context window</span>
+      <span class="meter-ctx-value">86,000 <span>/ 200,000</span></span>
+      <div class="meter-bar"><span class="meter-bar-fill" style={`width:${percent}%`} /></div>
+    </div>
+  </div>
+
+  <div class="meter-stats">
+    <div class="meter-stat">
+      <span class="meter-stat-label">input</span>
+      <span class="meter-stat-value">12,408</span>
+    </div>
+    <div class="meter-stat">
+      <span class="meter-stat-label">output</span>
+      <span class="meter-stat-value">73,591</span>
+    </div>
+    <div class="meter-stat">
+      <span class="meter-stat-label">cost</span>
+      <span class="meter-stat-value meter-cost">$0.28</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .meter {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    font-family: var(--mono);
+  }
+
+  .meter-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .meter-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  .meter-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--status-done);
+  }
+
+  .meter-live-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--status-done);
+    box-shadow: 0 0 6px rgba(95, 214, 164, 0.5);
+    animation: meter-pulse 1.5s ease-in-out infinite;
+  }
+
+  .meter-top {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .meter-ring {
+    position: relative;
+    width: 74px;
+    height: 74px;
+    flex-shrink: 0;
+  }
+
+  .meter-ring svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .meter-ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.05rem;
+  }
+
+  .meter-pct {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+  }
+
+  .meter-used {
+    font-size: 0.48rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-dim);
+  }
+
+  .meter-context {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .meter-ctx-label {
+    font-size: 0.56rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-dim);
+  }
+
+  .meter-ctx-value {
+    font-size: 0.92rem;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .meter-ctx-value span {
+    color: var(--fg-dim);
+    font-size: 0.78rem;
+  }
+
+  .meter-bar {
+    width: 100%;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .meter-bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #34d399, #10b981);
+  }
+
+  .meter-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .meter-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.5rem 0.55rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .meter-stat-label {
+    font-size: 0.52rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-dim);
+  }
+
+  .meter-stat-value {
+    font-size: 0.82rem;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .meter-cost {
+    color: var(--accent);
+  }
+
+  @keyframes meter-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+</style>
