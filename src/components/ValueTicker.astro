@@ -1,0 +1,116 @@
+---
+// Infinite marquee of supported agents + product principles.
+// The item list is the single source of truth for provider support on the page.
+const items = [
+  { label: "Claude Code", icon: "/claude.svg" },
+  { label: "OpenCode", icon: "/opencode-logo-dark.svg" },
+  { label: "Codex — planned", icon: "/codex.svg", soft: true },
+  { label: "Self-hosted" },
+  { label: "Your keys stay local" },
+  { label: "MCP native" },
+  { label: "Human in the loop" },
+  { label: "Open-source soon" },
+];
+---
+
+<section class="ticker" aria-label="Supported agents and principles">
+  <div class="ticker-track">
+    {
+      [0, 1].map((copy) => (
+        <div class="ticker-group" aria-hidden={copy === 1 ? "true" : undefined}>
+          {items.map((it) => (
+            <span class={`ticker-item ${it.soft ? "ticker-item--soft" : ""}`}>
+              {it.icon && <img src={it.icon} alt="" class="ticker-icon" />}
+              <span>{it.label}</span>
+              <span class="ticker-dot" aria-hidden="true">·</span>
+            </span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .ticker {
+    position: relative;
+    width: 100%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 6%,
+      black 94%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 6%,
+      black 94%,
+      transparent
+    );
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 42s linear infinite;
+  }
+
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+
+  .ticker-group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding-right: 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    white-space: nowrap;
+  }
+
+  .ticker-item--soft {
+    opacity: 0.4;
+  }
+
+  .ticker-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+  .ticker-dot {
+    color: var(--fg-dim);
+    padding-left: 0.9rem;
+  }
+
+  @keyframes ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+      animation: none;
+    }
+  }
+</style>

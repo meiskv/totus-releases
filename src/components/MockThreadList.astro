@@ -1,0 +1,268 @@
+---
+const threads = [
+  {
+    title: "fix auth token refresh",
+    branch: "feat/auth-refresh",
+    status: "working" as const,
+    note: "worktree",
+    time: "2m",
+    selected: true,
+  },
+  {
+    title: "rate limiting edge case",
+    branch: "feat/rate-limit",
+    status: "open" as const,
+    note: "PR #48",
+    time: "1h",
+    selected: false,
+  },
+  {
+    title: "dark theme overhaul",
+    branch: "refactor/theme",
+    status: "merged" as const,
+    note: "merged",
+    time: "1d",
+    selected: false,
+  },
+  {
+    title: "MCP sidebar: show-more toggle",
+    branch: "feat/mcp-sidebar",
+    status: "merged" as const,
+    note: "merged",
+    time: "2d",
+    selected: false,
+  },
+];
+
+const statusLabel = {
+  working: "Working",
+  open: "Open PR",
+  merged: "Merged",
+};
+---
+
+<div class="threads">
+  {
+    threads.map((t) => (
+      <div class={`thread thread--${t.status} ${t.selected ? "thread--selected" : ""}`}>
+        <div class="thread-top">
+          <span class={`thread-pill thread-pill--${t.status}`}>
+            <span class="thread-dot" />
+            {statusLabel[t.status]}
+          </span>
+          <span class="thread-time">{t.time}</span>
+        </div>
+        <span class="thread-title">{t.title}</span>
+        <div class="thread-sub">
+          <span class="thread-git" aria-hidden="true">
+            {t.status === "working" && (
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="4.5" cy="3.6" r="1.6" />
+                <circle cx="4.5" cy="12.4" r="1.6" />
+                <circle cx="11.5" cy="3.6" r="1.6" />
+                <path d="M4.5 5.2v5.6" />
+                <path d="M11.5 5.2v.5c0 2.5-2 4.5-4.5 4.5H6" />
+              </svg>
+            )}
+            {t.status === "open" && (
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="4.5" cy="4" r="1.6" />
+                <circle cx="4.5" cy="12.4" r="1.6" />
+                <circle cx="11.5" cy="12" r="1.6" />
+                <path d="M4.5 5.6v5.2" />
+                <path d="M11.5 10.4V6.4a1.4 1.4 0 0 0-1.4-1.4H8" />
+                <path d="m9.4 3.4-1.7 1.6 1.7 1.6" />
+              </svg>
+            )}
+            {t.status === "merged" && (
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="4.5" cy="4" r="1.6" />
+                <circle cx="4.5" cy="12.4" r="1.6" />
+                <circle cx="11.5" cy="12" r="1.6" />
+                <path d="M4.5 5.6v5.2" />
+                <path d="M11.5 10.4V9.6C11.5 7 9.4 5 6.8 5H6" />
+              </svg>
+            )}
+          </span>
+          <span class="thread-branch">{t.branch}</span>
+          <span class="thread-note">· {t.note}</span>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .threads {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-family: "Barlow", sans-serif;
+  }
+
+  .thread {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.55rem 0.6rem;
+    border-radius: 9px;
+    border: 1px solid transparent;
+  }
+
+  .thread--selected {
+    background: var(--surface-raised);
+    border-color: var(--border);
+  }
+
+  .thread-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .thread-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+    padding: 0.12rem 0.45rem 0.12rem 0.4rem;
+    border-radius: 999px;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .thread-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .thread-pill--working {
+    color: var(--status-working);
+    border-color: rgba(125, 211, 252, 0.32);
+  }
+
+  .thread-pill--working .thread-dot {
+    background: var(--status-working);
+    box-shadow: 0 0 6px rgba(125, 211, 252, 0.5);
+    animation: thread-pulse 1.5s ease-in-out infinite;
+  }
+
+  .thread-pill--open {
+    color: var(--status-done);
+    border-color: rgba(95, 214, 164, 0.32);
+  }
+
+  .thread-pill--open .thread-dot {
+    background: var(--status-done);
+  }
+
+  .thread-pill--merged {
+    color: var(--status-merged);
+    border-color: rgba(179, 164, 251, 0.35);
+  }
+
+  .thread-pill--merged .thread-dot {
+    background: var(--status-merged);
+  }
+
+  .thread-time {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--fg-dim);
+    flex-shrink: 0;
+  }
+
+  .thread-title {
+    font-size: 0.78rem;
+    color: var(--fg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .thread-sub {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .thread-git {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    display: inline-flex;
+    color: var(--fg-dim);
+  }
+
+  .thread-git svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .thread--working .thread-git {
+    color: var(--status-working);
+  }
+
+  .thread--open .thread-git {
+    color: var(--status-done);
+  }
+
+  .thread--merged .thread-git {
+    color: var(--status-merged);
+  }
+
+  .thread-branch {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    color: var(--fg-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .thread-note {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    color: var(--fg-dim);
+    flex-shrink: 0;
+  }
+
+  @keyframes thread-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+</style>

@@ -1,0 +1,201 @@
+---
+const steps = [
+  { text: "Reproduce the token expiry on a long session", done: true },
+  { text: "Add refresh-on-expiry in the auth layer", done: true },
+  { text: "Write a regression test", done: false },
+  { text: "Hand off to a Code thread to ship", done: false },
+];
+---
+
+<div class="plan">
+  <div class="plan-head">
+    <div class="plan-head-left">
+      <span class="plan-spark" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4m10-10h-4M6 12H2m15.07-7.07-2.83 2.83M9.76 14.24l-2.83 2.83m12.14 0-2.83-2.83M9.76 9.76 6.93 6.93" stroke-linecap="round"/></svg>
+      </span>
+      <span class="plan-label">Generated plan</span>
+    </div>
+    <span class="plan-ro">read-only</span>
+  </div>
+
+  <p class="plan-title">Fix expiring auth sessions</p>
+
+  <div class="plan-steps">
+    {steps.map((s) => (
+      <div class={`plan-step ${s.done ? "plan-step--done" : ""}`}>
+        <span class="plan-check">
+          {s.done ? (
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ) : (
+            <span class="plan-check-empty" />
+          )}
+        </span>
+        <span class="plan-step-text">{s.text}</span>
+      </div>
+    ))}
+  </div>
+
+  <div class="plan-footer">
+    <div class="plan-sources">
+      <span class="plan-from">Sources</span>
+      <span class="plan-tag"><img src="/slack.svg" alt="" class="plan-tag-icon" />Slack</span>
+      <span class="plan-tag"><img src="/linear.svg" alt="" class="plan-tag-icon" />Linear</span>
+      <span class="plan-tag plan-tag--dim">repo</span>
+    </div>
+    <span class="plan-progress">2 / {steps.length}</span>
+  </div>
+</div>
+
+<style>
+  .plan {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .plan-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .plan-head-left {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .plan-spark {
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+  }
+
+  .plan-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.85;
+  }
+
+  .plan-ro {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #4ec98f;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: rgba(78, 201, 143, 0.08);
+  }
+
+  .plan-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .plan-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .plan-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.25rem 0;
+  }
+
+  .plan-check {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.05rem;
+  }
+
+  .plan-step--done .plan-check {
+    color: var(--accent);
+  }
+
+  .plan-check-empty {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1.5px solid var(--border-strong);
+  }
+
+  .plan-step-text {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--fg-muted);
+  }
+
+  .plan-step--done .plan-step-text {
+    color: var(--fg-dim);
+    text-decoration: line-through;
+    text-decoration-color: var(--border-strong);
+  }
+
+  .plan-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .plan-sources {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .plan-from {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fg-dim);
+  }
+
+  .plan-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    padding: 0.08rem 0.3rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+  }
+
+  .plan-tag--dim {
+    color: var(--fg-dim);
+  }
+
+  .plan-tag-icon {
+    width: 9px;
+    height: 9px;
+    opacity: 0.7;
+  }
+
+  .plan-progress {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--fg-dim);
+  }
+</style>

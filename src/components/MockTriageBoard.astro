@@ -1,0 +1,101 @@
+---
+import MockTriageCard from "./MockTriageCard.astro";
+
+const items = [
+  {
+    title: "Auth token expires mid-session",
+    source: "linear" as const,
+    meta: "TOT-21",
+    priority: "P0" as const,
+    status: "needs-you" as const,
+    author: "dana",
+    time: "3h ago",
+  },
+  {
+    title: "@you — ship the export fix this week?",
+    source: "slack" as const,
+    meta: "#engineering",
+    priority: "P1" as const,
+    status: "needs-you" as const,
+    author: "alex",
+    time: "6h ago",
+  },
+  {
+    title: "Billing webhook retries duplicates",
+    source: "linear" as const,
+    meta: "TOT-18",
+    priority: "P1" as const,
+    status: "triaging" as const,
+    author: "you",
+    time: "12h ago",
+  },
+  {
+    title: "Triage board polish",
+    source: "linear" as const,
+    meta: "TOT-12",
+    priority: "P2" as const,
+    status: "shipped" as const,
+    author: "you",
+    time: "1d ago",
+  },
+];
+---
+
+<div class="inbox">
+  <div class="inbox-header">
+    <span class="inbox-title">Inbox</span>
+    <span class="inbox-count">{items.filter(i => i.status === "needs-you").length} needs you</span>
+  </div>
+  <div class="inbox-list">
+    {items.map((item) => (
+      <MockTriageCard
+        title={item.title}
+        source={item.source}
+        meta={item.meta}
+        priority={item.priority}
+        status={item.status}
+        author={item.author}
+        time={item.time}
+      />
+    ))}
+  </div>
+</div>
+
+<style>
+  .inbox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .inbox-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0 0.2rem;
+  }
+
+  .inbox-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+
+  .inbox-count {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.03em;
+    color: #f4c453;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .inbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+</style>

@@ -1,0 +1,192 @@
+---
+---
+
+<div class="appr">
+  <div class="appr-head">
+    <span class="appr-icon" aria-hidden="true">
+      <svg
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M8 1.6 13 3.4v3.9c0 3.4-2.2 5.6-5 6.7-2.8-1.1-5-3.3-5-6.7V3.4z"></path>
+        <path d="m5.9 7.9 1.5 1.5 3-3.1"></path>
+      </svg>
+    </span>
+    <span class="appr-kind">Pending approval</span>
+    <span class="appr-count">1 / 2</span>
+  </div>
+
+  <div class="appr-body">
+    <span class="appr-summary">File-change requested</span>
+    <div class="appr-target">
+      <span class="appr-verb">Write</span>
+      <code class="appr-path">
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 2h5l3 3v9H4z"></path>
+          <path d="M9 2v3h3"></path>
+        </svg>
+        <span class="appr-path-text">apps/server/src/provider/ClaudeCodeAdapter.ts</span>
+      </code>
+    </div>
+  </div>
+
+  <div class="appr-actions">
+    <button class="appr-btn appr-btn--decline" type="button">Decline</button>
+    <button class="appr-btn appr-btn--session" type="button">Allow for session</button>
+    <button class="appr-btn appr-btn--primary" type="button">Approve once</button>
+  </div>
+</div>
+
+<style>
+  .appr {
+    width: 100%;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-family: "Barlow", sans-serif;
+  }
+
+  .appr-head {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .appr-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--status-warn);
+    display: inline-flex;
+  }
+
+  .appr-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .appr-kind {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  .appr-count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--fg-dim);
+  }
+
+  .appr-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .appr-summary {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .appr-target {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .appr-verb {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 0.12rem 0.4rem;
+    border-radius: 5px;
+  }
+
+  .appr-path {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--fg-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.45rem;
+  }
+
+  .appr-path svg {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    color: var(--fg-dim);
+  }
+
+  .appr-path-text {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .appr-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .appr-btn {
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.4rem 0.7rem;
+    border-radius: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    cursor: default;
+  }
+
+  .appr-btn--primary {
+    background: var(--accent);
+    color: #062018;
+    border-color: transparent;
+    font-weight: 600;
+  }
+
+  .appr-btn--session {
+    border-color: rgba(16, 185, 129, 0.35);
+  }
+
+  .appr-btn--decline {
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.3);
+  }
+</style>
