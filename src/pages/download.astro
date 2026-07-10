@@ -27,19 +27,37 @@ import Layout from "../layouts/Layout.astro";
 
   <div class="first-launch">
     <div class="fl-head">
-      <svg class="fl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>
-      <h2 class="fl-title">First launch on macOS</h2>
+      <svg class="fl-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4"></path><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>
+      <h2 class="fl-title">How to install on macOS</h2>
     </div>
-    <p class="fl-text">
-      Totus is an open alpha and isn&rsquo;t notarized yet, so macOS may say the app is
-      &ldquo;damaged.&rdquo; It isn&rsquo;t &mdash; that&rsquo;s just Gatekeeper blocking an
-      unsigned build. Drag Totus to Applications, then run this once in Terminal:
-    </p>
-    <div class="fl-cmd">
-      <code id="fl-cmd-text">xattr -dr com.apple.quarantine "/Applications/Totus (Beta).app"</code>
-      <button type="button" class="fl-copy" data-copy-target="fl-cmd-text">Copy</button>
-    </div>
-    <p class="fl-hint">Open Totus normally afterwards &mdash; you only need to do this once.</p>
+
+    <ol class="fl-steps">
+      <li class="fl-step">
+        <span class="fl-step-title">Download &amp; open the disk image</span>
+        <span class="fl-step-text">
+          Click the <code>.dmg</code> above to download it, then double-click the file
+          and drag <strong>Totus</strong> into your <strong>Applications</strong> folder.
+        </span>
+      </li>
+      <li class="fl-step">
+        <span class="fl-step-title">Run one Terminal command</span>
+        <span class="fl-step-text">
+          Totus is an open alpha and isn&rsquo;t notarized yet, so macOS may say the app is
+          &ldquo;damaged.&rdquo; It isn&rsquo;t &mdash; that&rsquo;s just Gatekeeper blocking an
+          unsigned build. Open <strong>Terminal</strong> and run this once:
+        </span>
+        <div class="fl-cmd">
+          <code id="fl-cmd-text">xattr -dr com.apple.quarantine "/Applications/Totus (Beta).app"</code>
+          <button type="button" class="fl-copy" data-copy-target="fl-cmd-text">Copy</button>
+        </div>
+      </li>
+      <li class="fl-step">
+        <span class="fl-step-title">Launch Totus</span>
+        <span class="fl-step-text">
+          Open Totus from Applications as usual. You only need the Terminal step once.
+        </span>
+      </li>
+    </ol>
   </div>
 
   <p class="releases-link">
@@ -240,11 +258,67 @@ import Layout from "../layouts/Layout.astro";
     letter-spacing: -0.01em;
   }
 
-  .fl-text {
+  .fl-steps {
+    list-style: none;
+    counter-reset: fl-step;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .fl-step {
+    counter-increment: fl-step;
+    position: relative;
+    padding-left: 2.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .fl-step::before {
+    content: counter(fl-step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .fl-step-title {
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+  }
+
+  .fl-step-text {
     font-size: 0.82rem;
     line-height: 1.55;
     color: var(--fg-dim);
-    margin: 0 0 0.85rem;
+  }
+
+  .fl-step-text code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.78rem;
+    padding: 0.05rem 0.3rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .fl-step-text strong {
+    color: var(--fg);
+    font-weight: 600;
   }
 
   .fl-cmd {
@@ -291,12 +365,6 @@ import Layout from "../layouts/Layout.astro";
   .fl-copy.copied {
     color: #4ade80;
     border-color: rgba(74, 222, 128, 0.4);
-  }
-
-  .fl-hint {
-    font-size: 0.75rem;
-    color: var(--fg-dim);
-    margin: 0.75rem 0 0;
   }
 
 </style>
